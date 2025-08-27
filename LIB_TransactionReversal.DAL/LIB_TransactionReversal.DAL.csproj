@@ -3,6 +3,15 @@
   <PropertyGroup>
     <TargetFramework>net9.0</TargetFramework>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Enum\**" />
+    <Compile Remove="Settings\**" />
+    <EmbeddedResource Remove="Enum\**" />
+    <EmbeddedResource Remove="Settings\**" />
+    <None Remove="Enum\**" />
+    <None Remove="Settings\**" />
+  </ItemGroup>
   <ItemGroup>
 	  <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
 	  <PackageReference Include="BouncyCastle.Cryptography" Version="2.5.1" />
@@ -24,11 +33,5 @@
     <PackageReference Include="System.Buffers" Version="4.6.1" />
     <PackageReference Include="System.Collections" Version="4.3.0" />
     <PackageReference Include="ZstdSharp.Port" Version="0.8.5" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Configuration\" />
-    <Folder Include="DBInitializer\" />
-    <Folder Include="Enum\" />
-    <Folder Include="Settings\" />
   </ItemGroup>	
 </Project>

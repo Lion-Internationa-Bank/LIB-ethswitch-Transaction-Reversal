@@ -3,7 +3,6 @@ using LIB_Documentmanagement.DAL.Entity;
 using LIB_TransactionReversal.Application.Services;
 using LIB_TransactionReversal.DAL.DTO;
 using LIB_TransactionReversal.DAL.Entity;
-using LIB_Usermanagement.Application.ViewModels;
 using LIB_Usermanagement.DAL;
 using LIB_Usermanagement.DAL.Entity.Account;
 
@@ -14,28 +13,12 @@ namespace LIB_Usermanagement.UI.Infrastructure
     {
         public AppMapping()
         {
-            CreateMap<User, UserRegistrationDto>()
-               .ForMember(dest => dest.FullName,
-                       opt => opt.MapFrom(src => src.Full_name))
-               .ForMember(dest => dest.BranchName,
-                       opt => opt.MapFrom(src => src.Branch_name))
-               .ForMember(dest => dest.BranchCode,
-                       opt => opt.MapFrom(src => src.Branch))
-               .ReverseMap();
-
-            CreateMap<UserUpdateDto, UserRegistrationDto>().ReverseMap();
             CreateMap<LibOutgoingTransaction, TransactionNotFoundAtEthSwitch>().ReverseMap();
             CreateMap<TransactionReversal, SuccessfullTransaction>().ReverseMap();
             CreateMap<TransactionReversal, TransactionNotFoundAtEthSwitch>().ReverseMap();
             CreateMap<ImportEthswichTransactionDto, TransactionNotFoundAtLIB>().ReverseMap();
 
-            //CreateMap<EthswitchOutgoingTransactionImport, TransactionNotFoundAtLIB>()
-            //   .ForMember(dest => dest.Amount,
-            //           opt => opt.MapFrom(src => src.Amount))
-            //   .ForMember(dest => dest.Reference,
-            //           opt => opt.MapFrom(src => src.Refnum_F37))
-               
-            //   .ReverseMap();
+           
             
             CreateMap<CBSEthswichOutgoingTransaction, TransactionNotFoundAtEthSwitch>()
                .ForMember(dest => dest.Amount,
