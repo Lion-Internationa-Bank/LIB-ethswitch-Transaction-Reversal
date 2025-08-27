@@ -1,0 +1,126 @@
+<div style="margin: 15px;">
+  <h6 style="color: rgb(0, 66, 93);">Transaction Approval For Reversal</h6>
+  <hr>
+  <form [formGroup]="TransactionSearchForm">
+    <div class="container-form-fields">
+    <div class="form-field">
+      <mat-form-field>
+        <mat-label>Account No:</mat-label>
+        <input formControlName="AccountNo" matInput>
+      </mat-form-field>
+    </div>
+    <div class="form-field">
+      <mat-form-field>
+        <mat-label>Reference No:</mat-label>
+        <input formControlName="ReferenceNo" matInput>
+      </mat-form-field>
+    </div>
+    
+    <!-- <div class="form-field">
+      <mat-form-field>
+        <mat-label>Transaction Date</mat-label>
+        <mat-date-range-input  [rangePicker]="picker">
+          <input matStartDate formControlName="DateFrom" placeholder="Start date">
+          <input matEndDate formControlName="DateTo" placeholder="End date">
+        </mat-date-range-input>
+        <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>
+        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-date-range-picker #picker></mat-date-range-picker>
+     
+      </mat-form-field> 
+    </div>
+      -->
+      <div class="form-field">
+        <mat-form-field>
+            <mat-label>Transaction Date</mat-label>
+            <input matInput [matDatepicker]="TransactionDate" formControlName="TransactionDate">
+            <mat-datepicker-toggle matIconSuffix [for]="TransactionDate"></mat-datepicker-toggle>
+            <mat-datepicker #TransactionDate></mat-datepicker>
+          </mat-form-field>
+      </div>
+    
+    <div class="form-field">
+        <button mat-flat-button color="primary" (click)="searchTransaction()">Search</button>
+    </div>
+    </div>
+    <div class="form-field">
+      <button mat-flat-button color="primary" *ngIf="selection?.selected.length > 0" (click)="checkedTransaction()">Checked for Reversal</button>
+  </div>
+</form>
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+        <!-- Checkbox Column -->
+  <ng-container matColumnDef="select">
+    <th mat-header-cell *matHeaderCellDef>
+      <mat-checkbox (change)="$event ? toggleAllRows() : null"
+                    [checked]="selection.hasValue() && isAllSelected()"
+                    [indeterminate]="selection.hasValue() && !isAllSelected()"
+                    [aria-label]="checkboxLabel()">
+      </mat-checkbox>
+    </th>
+    <td mat-cell *matCellDef="let row">
+      <mat-checkbox (click)="$event.stopPropagation()"
+                    (change)="$event ? selection.toggle(row) : null"
+                    [checked]="selection.isSelected(row)"
+                    [aria-label]="checkboxLabel(row)">
+      </mat-checkbox>
+    </td>
+  </ng-container>
+    
+    
+        <!-- accountNumber Column -->
+        <ng-container matColumnDef="accountNumber">
+          <th mat-header-cell *matHeaderCellDef>LIB AccountNumber </th>
+          <td mat-cell *matCellDef="let element"> {{element.debitedAccountNumber}} </td>
+        </ng-container>
+      
+        <!-- receiverAccount Column -->
+        <ng-container matColumnDef="receiverAccount">
+          <th mat-header-cell *matHeaderCellDef> Receiver Account </th>
+          <td mat-cell *matCellDef="let element"> {{element.creditedAccount}} </td>
+        </ng-container>
+      
+        <!-- amount Column -->
+        <ng-container matColumnDef="amount">
+          <th mat-header-cell *matHeaderCellDef> Amount </th>
+          <td mat-cell *matCellDef="let element"> {{element.amount}} </td>
+        </ng-container>
+      
+        <!-- rrn Column -->
+        <ng-container matColumnDef="rrn">
+          <th mat-header-cell *matHeaderCellDef> Reference No. </th>
+          <td mat-cell *matCellDef="let element"> {{element.refNo}} </td>
+        </ng-container>
+    
+        <!-- Date Column -->
+        <ng-container matColumnDef="createdAt">
+            <th mat-header-cell *matHeaderCellDef> Date </th>
+            <td mat-cell *matCellDef="let element"> {{element.createdAt | date}} </td>
+        </ng-container>
+
+         <!-- Message Column -->
+         <!-- <ng-container matColumnDef="message">
+          <th mat-header-cell *matHeaderCellDef> Message </th>
+          <td mat-cell *matCellDef="let element"> <span style="color: red;">{{element.message}}</span> </td>
+        </ng-container> -->
+    
+        <!-- <ng-container matColumnDef="Action">
+          <th mat-header-cell *matHeaderCellDef></th>
+          <td mat-cell *matCellDef="let element">
+            <button mat-button color="primary" (click)="createtransfere(element.id); element.status='pending'" *ngIf="element.status=='Approved'">
+              Reverse Payment
+            </button>
+          </td>
+        </ng-container> -->
+      
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+    
+      <mat-paginator [pageSizeOptions]="[5, 10, 20]"
+      showFirstLastButtons
+      aria-label="Select page of periodic elements">
+    </mat-paginator>
+    </div>
+      
+      

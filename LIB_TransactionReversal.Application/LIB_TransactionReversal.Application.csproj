@@ -1,0 +1,11 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\LIB_TransactionReversal.DAL\LIB_TransactionReversal.DAL.csproj" />
+  </ItemGroup>
+
+</Project>

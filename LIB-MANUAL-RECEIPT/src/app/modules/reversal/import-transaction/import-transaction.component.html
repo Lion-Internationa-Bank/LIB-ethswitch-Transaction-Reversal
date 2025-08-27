@@ -1,0 +1,167 @@
+<div style="margin: 15px;">
+ <h6 style="color: rgb(0, 66, 93);">Import Ethswich Excell File and Reconcilation</h6>
+ <hr>
+    <mat-accordion hideToggle>
+      <mat-expansion-panel [expanded]="true"  class="custom-expansion-panel">
+        <mat-expansion-panel-header>
+          <mat-panel-title> Import EtSwich Transaction </mat-panel-title>
+        </mat-expansion-panel-header>
+  <form [formGroup]="TransactionImportForm">
+
+   <div class="container-form-fields">
+    <div class="form-field">
+      <mat-form-field>
+          <mat-label>Transaction Date</mat-label>
+          <input matInput [matDatepicker]="picker" formControlName="TransactionDate">
+          <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+       
+        </mat-form-field>
+      </div>
+    <div class="form-field">
+    <input type="file" (change)="addfile($event)" placeholder="Upload file"
+             accept=".csv,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
+    </div>
+
+    <div class="form-field">
+      <button (click)="ImportItem()" mat-stroked-button [disabled]="!TransactionImportForm.valid">Import EtSwich Transaction</button>
+    </div>
+        </div>
+  </form>
+      </mat-expansion-panel>
+    <!-- </mat-accordion>
+     
+   
+  <mat-accordion class="example-headers-align" multi> -->
+          <mat-expansion-panel class="custom-expansion-panel">
+            <mat-expansion-panel-header>
+              <mat-panel-title> Reconsile Transaction </mat-panel-title>
+            </mat-expansion-panel-header>
+            <form [formGroup]="TransactionReconsileForm">
+        <div class="container-form-fields">
+        <div class="form-field">
+          <mat-form-field>
+              <mat-label>Transaction Date</mat-label>
+              <input matInput [matDatepicker]="ReconsileDate" formControlName="ReconsileDate">
+              <mat-datepicker-toggle matIconSuffix [for]="ReconsileDate"></mat-datepicker-toggle>
+              <mat-datepicker #ReconsileDate></mat-datepicker>
+            
+            </mat-form-field>
+          </div>
+        <div class="form-field">
+          <!-- <a [href]="temlateUrl">Download Excel Template</a> -->
+          <!-- [disabled]="dataSource.filteredData.length==0" -->
+          <button (click)="ReconsileTransaction()" color="primary"  mat-stroked-button [disabled]="!TransactionReconsileForm.valid">Reconsile Transaction</button>
+        </div>
+      </div>
+            </form>
+    </mat-expansion-panel>
+  <!-- </mat-accordion>
+
+  <mat-accordion class="example-headers-align" multi> -->
+    <mat-expansion-panel  class="custom-expansion-panel">
+      <mat-expansion-panel-header>
+        <mat-panel-title> Search Imported Transaction </mat-panel-title>
+      </mat-expansion-panel-header>
+      <form [formGroup]="TransactionSearchForm">
+  <div class="container-form-fields">
+  <div class="form-field">
+    <mat-form-field>
+        <mat-label>Transaction Date</mat-label>
+        <input matInput [matDatepicker]="SearchDate" formControlName="SearchDate">
+        <mat-datepicker-toggle matIconSuffix [for]="SearchDate"></mat-datepicker-toggle>
+        <mat-datepicker #SearchDate></mat-datepicker>
+      
+      </mat-form-field>
+    </div>
+  <div class="form-field">
+    <mat-form-field>
+      <mat-label>Transaction Type</mat-label>
+      <mat-select formControlName="TransactionType">
+        <mat-option value="0">Outgoing Transaction</mat-option>
+        <mat-option value="1">Incoming Transaction</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <div class="form-field">
+    <!-- <a [href]="temlateUrl">Download Excel Template</a> -->
+    <!-- [disabled]="dataSource.filteredData.length==0" -->
+    <button (click)="getImportedTransaction()" color="primary"  mat-stroked-button [disabled]="!TransactionSearchForm.valid">Search Imported Transaction</button>
+  </div>
+</div>
+      </form>
+</mat-expansion-panel>
+</mat-accordion>
+     
+
+  <!-- <div>
+    <div class="form-field">
+      <mat-form-field>
+        <mat-label>Filter</mat-label>
+        <input matInput (keyup)="applyFilter($event)" #input>
+      </mat-form-field>
+    </div>
+  </div> -->
+<table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+  <!-- Issuer Column -->
+  <ng-container matColumnDef="Issuer">
+    <th mat-header-cell *matHeaderCellDef> Issuer </th>
+    <td mat-cell *matCellDef="let element"> {{element.issuer}} </td>
+  </ng-container>
+
+  <!-- Acquirer Column -->
+  <ng-container matColumnDef="Acquirer">
+    <th mat-header-cell *matHeaderCellDef> Acquirer </th>
+    <td mat-cell *matCellDef="let element"> {{element.acquirer}} </td>
+  </ng-container>
+
+  <!-- Transaction_Date Column -->
+  <ng-container matColumnDef="Transaction_Date">
+    <th mat-header-cell *matHeaderCellDef> Transaction_Date </th>
+    <td mat-cell *matCellDef="let element"> {{element.transaction_Date}} </td>
+  </ng-container>
+
+  <!-- ref num Column -->
+  <ng-container matColumnDef="refnum_F37">
+    <th mat-header-cell *matHeaderCellDef> reference </th>
+    <td mat-cell *matCellDef="let element"> {{element.refnum_F37}} </td>
+  </ng-container>
+
+  <!-- Amount Column -->
+  <ng-container matColumnDef="Amount">
+    <th mat-header-cell *matHeaderCellDef> Amount </th>
+    <td mat-cell *matCellDef="let element"> {{element.amount}} </td>
+  </ng-container>
+
+    <!-- IsAlreadyExist Column -->
+    <ng-container matColumnDef="IsAlreadyExist">
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let element">
+       <span *ngIf="element.isAlreadyExist" style="color: red;"> The Transaction Id Already Imported
+       </span> </td>
+    </ng-container>
+
+  <!-- <ng-container matColumnDef="Action">
+    <th mat-header-cell *matHeaderCellDef></th>
+    <td mat-cell *matCellDef="let element"> 
+      <button mat-button color="primary" (click)="SaveSelectedForReversal(element)">
+        Checked for Reversal
+      </button>
+    </td>
+  </ng-container> -->
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+   <!-- Row shown when there is no matching data. -->
+  <!-- <tr class="mat-row" *matNoDataRow>
+  <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td> 
+</tr> -->
+</table>
+
+<mat-paginator [pageSizeOptions]="[5, 10, 20, 100, 200]"
+showFirstLastButtons
+aria-label="Select page of ">
+</mat-paginator>
+</div>
+

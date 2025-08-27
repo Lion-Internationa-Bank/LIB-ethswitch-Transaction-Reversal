@@ -1,0 +1,8 @@
+services:
+  lib_documentmanagement.api:
+    image: ${DOCKER_REGISTRY-}libdocumentmanagementapi
+   
+    build:
+      context: .
+      dockerfile: LIB_Documentmanagement.API/Dockerfile
+

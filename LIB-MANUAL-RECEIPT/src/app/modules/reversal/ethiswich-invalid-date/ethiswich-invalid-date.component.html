@@ -1,0 +1,106 @@
+<div style="margin: 15px;">
+  <h6 style="color: rgb(0, 66, 93);">Wrong Date on the Ethiswich Excel</h6>
+  <hr>
+    <form [formGroup]="TransactionSearchForm">
+      <div class="container-form-fields">
+        <!-- <div class="form-field">
+          <mat-form-field>
+            <mat-label>Transaction Type</mat-label>
+            <mat-select formControlName="TransactionType">
+              <mat-option value="0">Outgoing Transaction</mat-option>
+              <mat-option value="1">Incoming Transaction</mat-option>
+            </mat-select>
+          </mat-form-field>
+          </div> -->
+      <!-- <div class="form-field">
+        <mat-form-field>
+          <mat-label>LIB Account No:</mat-label>
+          <input formControlName="AccountNo" matInput>
+        </mat-form-field>
+      </div> -->
+
+      <!-- <div class="form-field">
+        <mat-form-field>
+          <mat-label>Other Account No:</mat-label>
+          <input formControlName="GlAccountNo" matInput>
+        </mat-form-field>
+      </div> -->
+      <!-- <div class="form-field">
+      <mat-form-field>
+          <mat-label>Transaction Date</mat-label>
+          <mat-date-range-input  [rangePicker]="picker">
+            <input matStartDate formControlName="DateFrom" placeholder="Start date">
+            <input matEndDate formControlName="DateTo" placeholder="End date">
+          </mat-date-range-input>
+          <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>
+          <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-date-range-picker #picker></mat-date-range-picker>
+       
+        </mat-form-field>
+      </div> -->
+
+       <div class="form-field">
+        <mat-form-field>
+            <mat-label>Transaction Date</mat-label>
+            <input matInput [matDatepicker]="TransactionDate" formControlName="TransactionDate">
+            <mat-datepicker-toggle matIconSuffix [for]="TransactionDate"></mat-datepicker-toggle>
+            <mat-datepicker #TransactionDate></mat-datepicker>
+          </mat-form-field>
+      </div>
+      
+      <div class="form-field">
+          <button mat-flat-button color="primary" (click)="searchTransaction()" [disabled]="!TransactionSearchForm.valid">Search</button>
+      </div>
+      </div>
+  </form>
+  
+  <button mat-flat-button color="primary" (click)="exportExcel()" *ngIf="dataSource.data.length>0">Export to Excel</button>
+
+  <button mat-flat-button color="primary" (click)="exportCSV()" *ngIf="dataSource.data.length>0">Export to CSV</button>
+
+      <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+      
+      
+         <!-- acquirer Column -->
+         <ng-container matColumnDef="acquirer">
+          <th mat-header-cell *matHeaderCellDef>acquirer </th>
+          <td mat-cell *matCellDef="let element"> {{element.acquirer}} </td>
+        </ng-container>
+      
+        <!-- issuer Column -->
+        <ng-container matColumnDef="issuer">
+          <th mat-header-cell *matHeaderCellDef> issuer </th>
+          <td mat-cell *matCellDef="let element"> {{element.issuer}} </td>
+        </ng-container>
+      
+        <!-- amount Column -->
+        <ng-container matColumnDef="amount">
+          <th mat-header-cell *matHeaderCellDef> Amount </th>
+          <td mat-cell *matCellDef="let element"> {{element.amount}} </td>
+        </ng-container>
+      
+        <!-- refnum_F37 Column -->
+        <ng-container matColumnDef="refnum_F37">
+          <th mat-header-cell *matHeaderCellDef> Reference No. </th>
+          <td mat-cell *matCellDef="let element"> {{element.refnum_F37}} </td>
+        </ng-container>
+
+    
+        <!-- Date Column -->
+        <ng-container matColumnDef="transaction_Date">
+            <th mat-header-cell *matHeaderCellDef>Transaction Date </th>
+            <td mat-cell *matCellDef="let element"> {{element.transaction_Date }} </td>
+        </ng-container>
+
+         
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+      
+        <mat-paginator [pageSizeOptions]="[5, 10, 20]"
+        showFirstLastButtons
+        aria-label="Select page of periodic elements">
+      </mat-paginator>
+      </div>
+        
+        

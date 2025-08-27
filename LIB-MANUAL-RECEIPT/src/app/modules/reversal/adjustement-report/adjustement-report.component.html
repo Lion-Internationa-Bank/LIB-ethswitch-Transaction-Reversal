@@ -1,0 +1,119 @@
+<div style="margin: 15px;">
+  <h6 style="color: rgb(0, 66, 93);">Adjustment Report</h6>
+  <hr>
+    <form [formGroup]="TransactionSearchForm">
+      <div class="container-form-fields">
+      <div class="form-field">
+        <mat-form-field>
+          <mat-label>Account No:</mat-label>
+          <input formControlName="AccountNo" matInput>
+        </mat-form-field>
+      </div>
+      <div class="form-field">
+      <mat-form-field>
+          <mat-label>Transaction Date</mat-label>
+          <mat-date-range-input  [rangePicker]="picker">
+            <input matStartDate formControlName="DateFrom" placeholder="Start date">
+            <input matEndDate formControlName="DateTo" placeholder="End date">
+          </mat-date-range-input>
+          <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>
+          <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-date-range-picker #picker></mat-date-range-picker>
+       
+        </mat-form-field>
+      </div>
+      <!-- <div class="form-field">
+        <mat-form-field >
+          <mat-label>Status</mat-label>
+          <mat-select formControlName="status">
+            <mat-option value="0" Selected>All</mat-option>
+            <mat-option value="Approved">Approve For Reversal</mat-option>
+            <mat-option value="UnResponsive">UnResponsive</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div> -->
+      <div class="form-field">
+          <button mat-flat-button color="primary" (click)="searchTransaction()">Search</button>
+      </div>
+      </div>
+  </form>
+  
+  <button mat-flat-button color="primary" (click)="exportExcel()" *ngIf="dataSource.data.length>0">Export to Excel</button>
+
+  <button mat-flat-button color="primary" (click)="exportCSV()" *ngIf="dataSource.data.length>0">Export to CSV</button>
+
+      <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+      
+      
+          <!-- accountNumber Column -->
+          <ng-container matColumnDef="accountNumber">
+            <th mat-header-cell *matHeaderCellDef>LIB AccountNumber </th>
+            <td mat-cell *matCellDef="let element"> {{element.creditedAccount}} </td>
+          </ng-container>
+        
+          <!-- receiverAccount Column -->
+          <!-- <ng-container matColumnDef="receiverAccount">
+            <th mat-header-cell *matHeaderCellDef> Receiver Account </th>
+            <td mat-cell *matCellDef="let element"> {{element.creditedAccount}} </td>
+          </ng-container> -->
+        
+          <!-- amount Column -->
+          <ng-container matColumnDef="amount">
+            <th mat-header-cell *matHeaderCellDef> Amount </th>
+            <td mat-cell *matCellDef="let element"> {{element.amount}} </td>
+          </ng-container>
+        
+          <!-- rrn Column -->
+          <ng-container matColumnDef="rrn">
+            <th mat-header-cell *matHeaderCellDef> Reference No. </th>
+            <td mat-cell *matCellDef="let element"> {{element.refNo}} </td>
+          </ng-container>
+
+          <!-- rrn Column -->
+          <ng-container matColumnDef="newTransaction">
+            <th mat-header-cell *matHeaderCellDef> Transaction Id</th>
+            <td mat-cell *matCellDef="let element"> {{element.newTransaction}} </td>
+          </ng-container>
+      
+          <!-- Date Column -->
+          <ng-container matColumnDef="createdAt">
+              <th mat-header-cell *matHeaderCellDef> Date </th>
+              <td mat-cell *matCellDef="let element"> {{element.createdAt | date}} </td>
+          </ng-container>
+  
+           <!-- CheckedBy Column -->
+           <ng-container matColumnDef="approvedBy">
+            <th mat-header-cell *matHeaderCellDef> Checked By </th>
+            <td mat-cell *matCellDef="let element"> {{element.approvedBy}} </td>
+          </ng-container>
+
+           <!-- CheckedDate Column -->
+          <ng-container matColumnDef="approvedDate">
+            <th mat-header-cell *matHeaderCellDef> Checked Date </th>
+            <td mat-cell *matCellDef="let element"> {{element.approvedDate | date}}</td>
+          </ng-container> 
+
+          <!-- paidBy Column -->
+          <ng-container matColumnDef="paidBy">
+          <th mat-header-cell *matHeaderCellDef> Paid By </th>
+          <td mat-cell *matCellDef="let element"> {{element.paidBy}} </td>
+        </ng-container>
+
+          <!-- paymentDate Column -->
+        <ng-container matColumnDef="paymentDate">
+          <th mat-header-cell *matHeaderCellDef> Payment Date </th>
+          <td mat-cell *matCellDef="let element"> {{element.paymentDate | date}}</td>
+        </ng-container> 
+      
+        
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+      
+        <mat-paginator [pageSizeOptions]="[5, 10, 20]"
+        showFirstLastButtons
+        aria-label="Select page of periodic elements">
+      </mat-paginator>
+      </div>
+        
+        

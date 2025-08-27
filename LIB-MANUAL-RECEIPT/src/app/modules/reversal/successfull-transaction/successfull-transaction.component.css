@@ -1,0 +1,15 @@
+.container-form-fields {
+    display: flex;
+    align-items: flex-start;
+    flex-wrap: wrap;
+  }
+
+
+.form-field {
+    width: 20%;
+    padding-right: 10px;
+    box-sizing: border-box;
+}
+mat-form-field{
+    width: 100%;
+}

@@ -1,0 +1,192 @@
+  <!-- Search Section -->
+  <div class="search-section ml-5 mt-4">
+    <select id="serviceType" class="form-controls" [(ngModel)]="searchFilters.serviceType">
+      <option value="">&nbsp; Select Service Type &nbsp;</option>
+      <option *ngFor="let type of serviceTypes" [value]="type">{{ type }}</option>
+    </select>
+
+    <input type="text" class="form-controls" id="recieptNoSearch" [(ngModel)]="searchFilters.recieptNo" placeholder="Search by Receipt No">
+
+    <input type="text" class="form-controls" id="customerSearch" [(ngModel)]="searchFilters.customerName" placeholder="Search by Customer Name">
+
+    <label for="startDate">Start Date</label>
+  <input type="date" class="form-control" id="startDate" [(ngModel)]="searchFilters.startDate" placeholder="Start Date">
+
+    <label for="endDate">End Date</label>
+    <input type="date" class="form-control" id="endDate" [(ngModel)]="searchFilters.endDate" placeholder="End Date">
+  
+    <input type="text" class="form-controls" id="accountSearch" [(ngModel)]="searchFilters.account" placeholder="Search by Account">
+
+    <!-- <input type="text" class="form-controls" id="branchSearch" [(ngModel)]="searchFilters.branch" placeholder="Search by Branch"> -->
+    <button class="btn btn-primary" type="submit"(click)="loadReceipts()">Search</button></div>
+
+  <!-- Receipt Table -->
+  <div class="mt-4">
+    <h5 class="color ml-5">Receipts</h5>
+    <table class="table mt-4 ml-5 table-responsive table-striped col-md-12 compact-table table-hover">
+      <div class="">
+        <button class="btn btn-sm" (click)="exportToPDF()">
+          <i class="material-icons color">picture_as_pdf</i>
+        </button>
+        <button class="btn btn-sm" (click)="exportToExcel()">
+          <i class="material-icons color">insert_drive_file</i>
+        </button>
+      </div>
+      <thead>
+        <tr>
+          <th>No</th>
+          <th>Receipt No</th>
+          <th>Date</th>
+          <th>Service Type</th>
+          <th>Customer Name</th>
+          <th>Account</th>
+          <th>Amount</th>
+          <th>Service Fee</th>
+          <th>Vat</th>
+          <th>Branch</th>
+          
+          <th>Updated By</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let receipt of receipts; let i = index">
+          <td>{{ i + 1 }}</td>
+          <td>{{ pad(receipt.id) }}</td>
+          <td>{{ receipt.transaction_Date | date }}</td>
+          <td>{{ receipt.paymentMethod }}</td>
+          <td>{{ receipt.debitor_Name }}</td>
+          <td>{{ receipt.account_No }}</td>
+          <td>{{ receipt.amount1 }}</td>
+          <td>{{ receipt.serviceFee }}</td>
+          <td>{{ receipt.vat }}</td>
+          <td>{{ receipt.inputing_Branch }}</td>
+          <td>{{ receipt.updatedBy }}</td>
+          <td>
+
+            <button *ngIf="authservice.getrole() === '0000' || authservice.getrole() === '0000'" 
+            class="btn btn-sm" (click)="openReceiptModal(receipt)">
+      <i class="material-icons color">edit</i>
+    </button>
+    <button *ngIf="authservice.getrole() === '0000' || authservice.getrole() === '0000'" 
+            class="btn btn-sm" (click)="deleteReceipt(receipt.id, receipt)">
+      <i class="material-icons color">delete</i>
+    </button>
+    
+            
+              <button  class="btn btn-sm material-icons1" (click)="printReceipt(receipt)" [ngStyle]="{'font-size': '10px', 'padding': '4px 6px'}">
+                <i class="material-icons">print</i> print
+              </button>
+            
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+
+
+  <div id="receiptContent" style="display: none;">
+    <div class="receipt">
+        <div class="receipt-header">
+            <img src="assets/img/LIBLogo2.jpg" alt="Abay Bank Logo" class="logo-img" />
+            <h2 class="slip-title">Abay Bank S.C</h2>
+            <p>TIN No: 0012812734</p>
+            <p>VAT Reg. No: 0012812734</p>
+            <p>VAT Reg. Date: 1/15/2024</p>
+        </div>
+
+        <div class="transaction-info">
+            <h3>Transaction Information / የግብይት መረጃ</h3>
+            <table>
+                <tr>
+                    <th>Payer Name / የተከፈለ ስም:</th>
+                    <td></td>
+                </tr>
+                <tr>
+                    <th>Payer Bank Acc. No / የተከፈለ የባንክ አካውንት ቁጥር:</th>
+                    <td></td>
+                </tr>
+                <tr>
+                    <th>Payer TIN No / የተከፈለ ቲአይን ቁጥር:</th>
+                    <td></td>
+                </tr>
+                <tr>
+                    <th>Payer Address / የተከፈለ አድራሻ:</th>
+                    <td></td>
+                </tr>
+                <tr>
+                    <th>Payer Phone / የተከፈለ ስልክ ቁጥር:</th>
+                    <td></td>
+                </tr>
+            </table>
+        </div>
+        
+        <div class="transaction-details">
+            <h3>Transaction Details / የግብይት ዝርዝር</h3>
+            <table>
+                <tr>
+                    <th>Transaction No / የግብይት ቁጥር:</th>
+                    <td></td>
+                </tr>
+                <tr>
+                    <th>Product / ምርት:</th>
+                    <td></td>
+                </tr>
+                <tr>
+                    <th>Settled Amount / የተከፈለ እቃ መጠን:</th>
+                    <td></td>
+                </tr>
+                <tr>
+                    <th>Service Fee / የአገልግሎት ክፍያ:</th>
+                    <td></td>
+                </tr>
+                <tr>
+                    <th>VAT (15%) / ኤቭኤቲ (15%):</th>
+                    <td></td>
+                </tr>
+                <tr>
+                    <th>Total Paid Amount / አጠቃላይ የተከፈለ መጠን:</th>
+                    <td></td>
+                </tr>
+            </table>
+        </div>
+        
+        <div class="amount-in-words">
+            <h3>Total Amount in Words / የተከፈለ መጠን በቃል</h3>
+            <table>
+                <tr>
+                    <th>Amount:</th>
+                    <td></td>
+                </tr>
+            </table>
+        </div>
+        
+        <div class="payment-method">
+            <h3>Payment Method / የክፍያ ዘዴ</h3>
+            <table>
+                <tr>
+                    <th>Method:</th>
+                    <td></td>
+                </tr>
+            </table>
+        </div>
+        
+
+        <div class="footer">
+            <img src="path/to/qr-code.png" alt="QR Code" class="qr-code" />
+            <p>Abay Bank S.C</p>
+            <p>Zuqualu Complex, Jomo Kenyatta Ave. | P.O.Box: 5887 Addis Ababa, Ethiopia</p>
+            <p>Tel: +251 11 515 8961 | Fax: +251 11 515 8282</p>
+            <p>Email: info@abaybanks.com</p>
+        </div>
+    </div>
+</div>
+
+
+<app-editreciept
+*ngIf="selectedReceipt"
+  [showModal]="modalVisible"
+  [ReceiptData]="selectedReceipt"
+  (closeModal)="closeReceiptModal()">
+</app-editreciept>

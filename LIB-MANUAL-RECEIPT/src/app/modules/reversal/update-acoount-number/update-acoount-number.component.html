@@ -1,0 +1,34 @@
+<div style="margin: 15px;">
+    <h6 style="color: rgb(0, 66, 93);">Update Account No</h6>
+    <hr>
+    <form [formGroup]="UpdateAccountForm">
+      <div class="container-form-fields">
+     
+      <div class="form-field">
+        <mat-form-field>
+          <mat-label>Reference No:</mat-label>
+          <input formControlName="ReferenceNo" matInput readonly>
+        </mat-form-field>
+      </div>
+       <div class="form-field">
+        <mat-form-field>
+          <mat-label>Account No:</mat-label>
+          <input formControlName="AccountNo" (change)="getAccountHolderName()"  matInput>
+        </mat-form-field>
+      </div>
+       <div class="form-field">
+        <mat-form-field>
+          <mat-label>Full Name:</mat-label>
+          <input formControlName="FullName" readonly matInput>
+        </mat-form-field>
+      </div>
+      </div>
+     
+  </form>
+</div>
+
+
+<mat-dialog-actions>
+  <button mat-flat-button mat-dialog-close>Close</button>
+  <button mat-flat-button color="primary" (click)="UpdateAccount()" [disabled]="!UpdateAccountForm.valid">Update</button>
+</mat-dialog-actions>

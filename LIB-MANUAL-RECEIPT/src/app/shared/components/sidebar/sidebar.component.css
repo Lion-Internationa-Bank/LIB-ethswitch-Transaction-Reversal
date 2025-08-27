@@ -1,0 +1,137 @@
+
+.nav-link{
+
+  color:white;
+height: 50px;
+padding: 0px;
+font-family: 'Times New Roman', Times, serif;
+
+}
+.nav-item{
+  font-family: 'Times New Roman', Times, serif;
+  color:white;
+}
+
+.cardbody{
+  font-family: 'Times New Roman', Times, serif;
+  
+}
+
+.font{
+  font-size: small;
+  font-family: 'Times New Roman', Times, serif;
+}
+
+
+  .logo-img{
+    width:30%;
+    height: 30%;
+      }
+      .sidebar {
+  
+        overflow: hidden;
+        width: 200px;
+        box-shadow:rgb(19, 18, 18);
+        font-family: 'Times New Roman', Times, serif;
+      }
+
+  .logo-img{
+    width:30%;
+    height: 30%;
+      }
+.sidebar{
+  background: linear-gradient(to right, rgb(0, 110, 156), rgb(0, 66, 93));
+  color:white
+}
+ .li{
+  color:white
+ }
+
+
+ .sidebar {
+  background: linear-gradient(to right, rgb(0, 110, 156), rgb(0, 66, 93));
+  color:white;
+  height: 100vh;
+  padding: 10px 0;
+}
+
+
+.sidebar .nav {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.sidebar .nav .nav-link {
+  display: flex;
+  align-items: center;
+  /* padding: 10px 20px; */
+  text-decoration: none;
+  color: white;
+  transition: all 0.3s ease;
+}
+
+.sidebar .nav .nav-link:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  text-decoration: none;
+}
+
+.sidebar .nav .nav-item.active .nav-link,
+.sidebar .nav .nav-link.router-link-active {
+  background-color: white;
+  color: rgb(0, 110, 156);
+  font-weight: bold;
+}
+
+.sidebar .nav .nav-link i {
+  /* margin-right: 10px; */
+  color: inherit;
+}
+
+.sidebar .nav .nav-link p {
+  margin: 0;
+}
+
+.cardbody.user {
+  font-weight: bold;
+  padding: 10px 20px;
+  margin-bottom: 20px;
+  color: white;
+}
+
+/* 
+@media (max-width: 576px) {
+  .sidebar-wrapper {
+    width:80;
+  }
+  .logo-img{
+    width:5%;
+    height: 10%;
+      }
+
+}
+
+
+@media (min-width: 577px) and (max-width: 992px) {
+  .sidebar-wrapper {
+    width: 100%;
+  }
+  .logo-img{
+    width:10%;
+    height: 20%;
+      }
+
+}
+
+
+@media (min-width: 993px) {
+  .sidebar-wrapper {
+    width: 120%; 
+  }
+  .logo-img{
+    width:30%;
+    height: 30%;
+      }
+
+
+} */
