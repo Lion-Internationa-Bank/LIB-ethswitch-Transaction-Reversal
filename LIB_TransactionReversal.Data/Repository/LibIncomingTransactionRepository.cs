@@ -11,6 +11,7 @@ using LIB_TransactionReversal.DAL.Entity;
 using LIB_TransactionReversal.DAL.Interface;
 using LIB_Usermanagement.DAL;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 
 namespace LIB_TransactionReversal.Infra.Data.Repository
@@ -19,11 +20,13 @@ namespace LIB_TransactionReversal.Infra.Data.Repository
     {
         private readonly TrasactionReversalDbContext _context;
         private readonly IMapper _mapper;
+        private readonly IConfiguration _configuration;
         public LibIncomingTransactionRepository(TrasactionReversalDbContext context,
-            IMapper mapper)
+            IMapper mapper, IConfiguration configuration)
         {
             _context = context;
             _mapper = mapper;
+            _configuration = configuration;
         }
 
         public async Task GetBatchEthswitchIncommingTransaction()
@@ -35,8 +38,8 @@ namespace LIB_TransactionReversal.Infra.Data.Repository
 
                 List<LIBIncommingTransactionResponse> libtrans = new List<LIBIncommingTransactionResponse>();
 
-                string URL = "http://10.1.10.90:5000/getEthswitchTransactionsDestination";
-                // string URL = _configuration["EndPointUrl:CheckAccoutUrl"] + "/api/lib/v1/checktransactionposibility";
+                //string URL = "http://10.1.10.90:5000/getEthswitchTransactionsDestination";
+                string URL = _configuration["EndPointUrl:GetIncommingTransactionFromLocalDB"];
                 HttpWebRequest request = (HttpWebRequest)WebRequest.Create(URL);
                 request.Method = "GET";
 

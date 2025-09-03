@@ -9,5 +9,6 @@ namespace LIB_TransactionReversal.DAL.Interface
     public interface ILibOutgoingTransactionRepository
     {
         Task GetBatchEthswitchOutgoingTransaction();
+        void RunNotToMakeIdelIIS();
     }
 }

@@ -20,11 +20,11 @@ namespace LIB_TransactionReversal.Application.Services
         {
             _transactionAdjustementRepository = transactionAdjustementRepository;
         }
-        public Task CheckedPendingTransactionForReversal(List<int> transactionAdjustementIdList)
+        public Task CheckedPendingTransactionForAdjustement(List<int> transactionAdjustementIdList)
         {
             try
             {
-                return _transactionAdjustementRepository.CheckedPendingTransactionForReversal(transactionAdjustementIdList);
+                return _transactionAdjustementRepository.CheckedPendingTransactionForAdjustement(transactionAdjustementIdList);
             }
             catch (Exception ex)
             {
@@ -32,11 +32,11 @@ namespace LIB_TransactionReversal.Application.Services
             }
         }
 
-        public Task<Response> CreateTransactionReversal(int Id)
+        public Task<Response> CreateTransactionAdjustement(int Id)
         {
             try
             {
-                return _transactionAdjustementRepository.CreateTransactionReversal(Id);
+                return _transactionAdjustementRepository.CreateTransactionAdjustement(Id);
             }
             catch (Exception ex)
             {

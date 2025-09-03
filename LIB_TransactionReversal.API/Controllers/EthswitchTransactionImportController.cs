@@ -206,5 +206,22 @@ namespace LIB_TransactionReversal.API.Controllers
             }
 
         }
+
+        [HttpGet("test")]
+        [AllowAnonymous]
+        public async Task<IActionResult> test()
+        {
+            try
+            {
+                return Ok();
+
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+
+            }
+
+        }
     }
 }

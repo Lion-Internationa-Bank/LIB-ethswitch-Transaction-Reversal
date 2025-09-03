@@ -11,6 +11,7 @@ using LIB_TransactionReversal.DAL.Interface;
 using LIB_Usermanagement.DAL;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Identity.Client;
 using Oracle.ManagedDataAccess.Client;
 
 namespace LIB_TransactionReversal.Infra.Data.Repository
@@ -240,14 +241,10 @@ namespace LIB_TransactionReversal.Infra.Data.Repository
         {
             try
             {
-                
-               // var sql = $"SELECT  ref_no, account_credited, creditor_branch FROM anbesatest3.ETHSWITCH_INL WHERE ref_no='{transactionId}'";
-                //var parameters = accountNos.Select((id, index) => new OracleParameter($":p{index}", id)).ToArray();
-
-                var sql = "SELECT ref_no, account_credited, creditor_branch FROM anbesatest3.ETHSWITCH_INL1 WHERE ref_no = :transactionId";
+                var sql = "SELECT ref_no, account_credited, creditor_branch FROM anbesaprod.ethswitch_in WHERE ref_no = :transactionId";
                 var parameter = new OracleParameter("transactionId", transactionId);
                 var response = new List<TransactionValidation>();
-                response = await _cbsContext.TransactionValidation.FromSqlRaw(sql, transactionId)
+                response = await _cbsContext.TransactionValidation.FromSqlRaw(sql, parameter)
                         .ToListAsync();
 
                 return response;
@@ -257,5 +254,8 @@ namespace LIB_TransactionReversal.Infra.Data.Repository
                 return new List<TransactionValidation>();
             }
         }
+
+        
+
     }
 }

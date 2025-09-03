@@ -38,19 +38,19 @@ namespace LIB_TransactionReversal.Infra.Data.Repository
         {
             try
             {
-                if (transactionAdjustement.Amount >= 0 && transactionAdjustement.Amount <= 5000)
-                {
-                    transactionAdjustement.ServiceFee = Convert.ToDecimal(0.004) * transactionAdjustement.Amount;
-                    transactionAdjustement.VAT = Convert.ToDecimal(0.15) * transactionAdjustement.ServiceFee;
-                    transactionAdjustement.TotalAmount = transactionAdjustement.Amount + transactionAdjustement.ServiceFee + transactionAdjustement.VAT;
+                //if (transactionAdjustement.Amount >= 0 && transactionAdjustement.Amount <= 5000)
+                //{
+                //    transactionAdjustement.ServiceFee = Convert.ToDecimal(0.004) * transactionAdjustement.Amount;
+                //    transactionAdjustement.VAT = Convert.ToDecimal(0.15) * transactionAdjustement.ServiceFee;
+                //    transactionAdjustement.TotalAmount = transactionAdjustement.Amount + transactionAdjustement.ServiceFee + transactionAdjustement.VAT;
 
-                }
-                if (transactionAdjustement.Amount > 5000)
-                {
-                    transactionAdjustement.ServiceFee = Convert.ToDecimal(0.0024) * transactionAdjustement.Amount;
-                    transactionAdjustement.VAT = Convert.ToDecimal(0.15) * transactionAdjustement.ServiceFee;
-                    transactionAdjustement.TotalAmount = transactionAdjustement.Amount + transactionAdjustement.ServiceFee + transactionAdjustement.VAT;
-                }
+                //}
+                //if (transactionAdjustement.Amount > 5000)
+                //{
+                //    transactionAdjustement.ServiceFee = Convert.ToDecimal(0.0024) * transactionAdjustement.Amount;
+                //    transactionAdjustement.VAT = Convert.ToDecimal(0.15) * transactionAdjustement.ServiceFee;
+                //    transactionAdjustement.TotalAmount = transactionAdjustement.Amount + transactionAdjustement.ServiceFee + transactionAdjustement.VAT;
+                //}
                 transactionAdjustement.Status = "Approved";
                 transactionAdjustement.ApprovedBy = _httpContextAccessor.HttpContext.User.Identity.Name;
                 transactionAdjustement.ApprovedDate = DateTime.Now;
@@ -156,23 +156,6 @@ namespace LIB_TransactionReversal.Infra.Data.Repository
         {
             try
             {
-                //if (transactionReversal.Amount >= 0 && transactionReversal.Amount <= 5000)
-                //{
-                //    transactionReversal.ServiceFee = Convert.ToDecimal(0.004) * transactionReversal.Amount;
-                //    transactionReversal.VAT = Convert.ToDecimal(0.15) * transactionReversal.ServiceFee;
-                //    transactionReversal.TotalAmount = transactionReversal.Amount + transactionReversal.ServiceFee + transactionReversal.VAT;
-
-                //}
-                //if (transactionReversal.Amount > 5000)
-                //{
-                //    transactionReversal.ServiceFee = Convert.ToDecimal(0.0024) * transactionReversal.Amount;
-                //    transactionReversal.VAT = Convert.ToDecimal(0.15) * transactionReversal.ServiceFee;
-                //    transactionReversal.TotalAmount = transactionReversal.Amount + transactionReversal.ServiceFee + transactionReversal.VAT;
-                //}
-                //transactionReversal.Status = "Approved";
-                //transactionReversal.ApprovedBy = _httpContextAccessor.HttpContext.User.Identity.Name;
-                //transactionReversal.ApprovedDate = DateTime.Now;
-
                 await context.TransactionAdjustement.AddRangeAsync(transactionAdjustementList);
                 await context.SaveChangesAsync();
             }
@@ -183,7 +166,7 @@ namespace LIB_TransactionReversal.Infra.Data.Repository
         }
 
 
-        public async Task CheckedPendingTransactionForReversal(List<int> transactionAdjustementIdList)
+        public async Task CheckedPendingTransactionForAdjustement(List<int> transactionAdjustementIdList)
         {
             try
             {
@@ -202,7 +185,7 @@ namespace LIB_TransactionReversal.Infra.Data.Repository
             }
         }
 
-        public async Task<Response> CreateTransactionReversal(int Id)
+        public async Task<Response> CreateTransactionAdjustement(int Id)
         {
 
             try
@@ -225,8 +208,8 @@ namespace LIB_TransactionReversal.Infra.Data.Repository
                 //{
                 //    return checkposibility;
                 //}
-                string URL = "https://10.1.22.198:4040/createtransferfailedethiswitchtocustomer";
-                //string URL = _configuration["EndPointUrl:CreateTransfere"] + "/createTransferreverse";
+                //string URL = "https://10.1.22.198:4040/createtransferfailedethiswitchtocustomer";
+                string URL = _configuration["EndPointUrl:CreateTransactionAdjustement"];
                 HttpWebRequest request = (HttpWebRequest)WebRequest.Create(URL);
                 request.Method = "POST";
                 request.ContentType = "application/json";

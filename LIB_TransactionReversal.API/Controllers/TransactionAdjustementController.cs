@@ -111,14 +111,14 @@ namespace LIB_TransactionReversal.API.Controllers
         [HttpGet("CreateTransaction/{Id}")]
         public async Task<IActionResult> CreateTransaction(int Id)
         {
-            var result = await _transactionAdjustementService.CreateTransactionReversal(Id);
+            var result = await _transactionAdjustementService.CreateTransactionAdjustement(Id);
             return Ok(result);
 
         }
         [HttpPost("CheckedPendingTransactionForReversal")]
         public async Task<IActionResult> CheckedPendingTransactionForReversal([FromBody] List<int> Ids)
         {
-            await _transactionAdjustementService.CheckedPendingTransactionForReversal(Ids);
+            await _transactionAdjustementService.CheckedPendingTransactionForAdjustement(Ids);
             return Ok(new Response()
             {
                 status = "1",
@@ -132,7 +132,11 @@ namespace LIB_TransactionReversal.API.Controllers
             Response result = new Response();
             foreach (int id in Ids)
             {
-                result = await _transactionAdjustementService.CreateTransactionReversal(id);
+                result = await _transactionAdjustementService.CreateTransactionAdjustement(id);
+                if (result.status == "0")
+                {
+                    return BadRequest(result);
+                }
             }
             return Ok(result);
         }

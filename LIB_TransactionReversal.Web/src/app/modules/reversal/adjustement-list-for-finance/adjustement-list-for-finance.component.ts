@@ -89,7 +89,7 @@ export class AdjustementListForFinanceComponent  implements AfterViewInit{
          this.ngxService.stop('searchTransaction');
       },
       error =>{
-        this.toaster.error("Please try again");
+       this.toaster.error("Unable to Made Transaction. Please try again");
         this.ngxService.stop('searchTransaction');
       }
     )
@@ -130,7 +130,7 @@ export class AdjustementListForFinanceComponent  implements AfterViewInit{
       this.ngxService.stop('AdjustTransactions');
    },
    error =>{
-     this.toaster.error("Please try again");
+     this.toaster.error("Unable to Made Transaction. Please try again");
      this.ngxService.stop('AdjustTransactions');
      this.searchTransaction();
    });

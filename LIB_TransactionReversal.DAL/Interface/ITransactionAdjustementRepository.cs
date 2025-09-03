@@ -20,8 +20,8 @@ namespace LIB_TransactionReversal.DAL.Interface
         Task UpdatTransactionAdjustement(TransactionAdjustement transactionAdjustement);
         Task updateTransactionAdjustementStatus(int id, string status, string message, string user = "", string transactionId = "");
         Task SaveTransactionAdjustement(List<TransactionAdjustement> transactionAdjustementList, TrasactionReversalDbContext context);
-        Task CheckedPendingTransactionForReversal(List<int> transactionAdjustementIdList);
-        Task<Response> CreateTransactionReversal(int Id);
+        Task CheckedPendingTransactionForAdjustement(List<int> transactionAdjustementIdList);
+        Task<Response> CreateTransactionAdjustement(int Id);
         Task updateTransactionAccountNumber(UpdateTransactionAccountDto objTranAdjustement);
     }
 }

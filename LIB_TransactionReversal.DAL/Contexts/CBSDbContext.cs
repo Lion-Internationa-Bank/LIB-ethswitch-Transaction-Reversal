@@ -15,6 +15,8 @@ namespace LIB_TransactionReversal.DAL.Contexts
         public CBSDbContext(DbContextOptions<CBSDbContext> options) : base(options)
         {
         }
+
+
         public DbSet<CBSEthswichIncomingTransaction> CBSEthswichIncomingTransaction { get; set; }
         public DbSet<CBSPendingEthswichIncomingTransaction> CBSPendingEthswichIncomingTransaction { get; set; }
         public DbSet<CBSEthswichOutgoingTransaction> CBSEthswichOutgoingTransaction { get; set; }

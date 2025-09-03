@@ -13,6 +13,7 @@ using LIB_TransactionReversal.DAL.Interface;
 using LIB_Usermanagement.DAL;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 
 namespace LIB_TransactionReversal.Infra.Data.Repository
@@ -22,11 +23,13 @@ namespace LIB_TransactionReversal.Infra.Data.Repository
     {
         private readonly TrasactionReversalDbContext _context;
         private readonly IMapper _mapper;
+        private readonly IConfiguration _configuration;
         public LibOutgoingTransactionRepository(TrasactionReversalDbContext context,
-            IMapper mapper)
+            IMapper mapper, IConfiguration configuration)
         {
             _context = context;
             _mapper = mapper;
+            _configuration = configuration;
         }
 
         public async Task GetBatchEthswitchOutgoingTransaction()
@@ -38,8 +41,8 @@ namespace LIB_TransactionReversal.Infra.Data.Repository
 
                 libtransResponse libtrans = new libtransResponse();
 
-                string URL = "http://10.1.10.90:7000/api/lib/v1/checkDailyLimit";
-                // string URL = _configuration["EndPointUrl:CheckAccoutUrl"] + "/api/lib/v1/checktransactionposibility";
+                //string URL = "http://10.1.10.90:7000/api/lib/v1/checkDailyLimit";
+                string URL = _configuration["EndPointUrl:GetOutgoingTransactionFromLocalDB"];
                 HttpWebRequest request = (HttpWebRequest)WebRequest.Create(URL);
                 request.Method = "GET";
 
@@ -65,6 +68,33 @@ namespace LIB_TransactionReversal.Infra.Data.Repository
                     await _context.SaveChangesAsync();
                 }
                
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public void RunNotToMakeIdelIIS()
+        {
+            try
+            {
+                ServicePointManager.ServerCertificateValidationCallback =
+            (sender, certificate, chain, sslPolicyErrors) => true;
+
+
+                string URL = _configuration["PubUrl"];
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(URL);
+                request.Method = "GET";
+
+                WebResponse webResponse = request.GetResponse();
+                using (Stream webStream = webResponse.GetResponseStream() ?? Stream.Null)
+                using (StreamReader responseReader = new StreamReader(webStream))
+                {
+                    string response = responseReader.ReadToEnd();
+                  
+                }
+
             }
             catch (Exception ex)
             {

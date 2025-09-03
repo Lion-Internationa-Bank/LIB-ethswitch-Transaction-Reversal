@@ -130,7 +130,7 @@ export class ReversalListForFinanceComponent implements AfterViewInit{
       this.ngxService.stop('ReverseTransactions');
    },
    error =>{
-     this.toaster.error("Please try again");
+     this.toaster.error("Unable to Made Reversal Successfully. Please try again");
      this.ngxService.stop('ReverseTransactions');
       this.searchTransaction();
    });

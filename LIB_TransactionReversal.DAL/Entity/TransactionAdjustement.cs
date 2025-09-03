@@ -18,9 +18,9 @@ namespace LIB_TransactionReversal.DAL.Entity
         public Decimal Amount { get; set; }
         public string CustomerName { get; set; }
         public string RefNo { get; set; }
-        public decimal? ServiceFee { get; set; }
-        public decimal? VAT { get; set; }
-        public decimal? TotalAmount { get; set; }
+        //public decimal? ServiceFee { get; set; }
+        //public decimal? VAT { get; set; }
+        //public decimal? TotalAmount { get; set; }
         public string Status { get; set; }
         public DateTime createdAt { get; set; }
         public string ApprovedBy { get; set; }

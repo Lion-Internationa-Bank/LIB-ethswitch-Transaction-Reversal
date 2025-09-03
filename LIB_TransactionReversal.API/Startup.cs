@@ -184,6 +184,7 @@ namespace LIB_Usermanagement.UI
             RecurringJob.AddOrUpdate<ICbsTransactionImportRepository>(job => job.ImportCbsOutgoingTransaction(), "0 7 * * *"); // Run on the mornong at 7 AM
             RecurringJob.AddOrUpdate<ICbsTransactionImportRepository>(job => job.ImportCbsIncomingTransaction(), "0 7 * * *"); // Run on the mornong at 7 AM
             RecurringJob.AddOrUpdate<ICbsTransactionImportRepository>(job => job.ImportPendingCbsIncomingTransaction(), "*/20 18-23 * * *"); // Run on the mornong at 7 AM
+            RecurringJob.AddOrUpdate<ILibOutgoingTransactionRepository>(job => job.RunNotToMakeIdelIIS(), "*/5 * * * *"); // Run every five minutes to prevent IIS from becoming idle and to ensure Hangfire operates smoothly on the web.
             //Initialize(app.ApplicationServices);
         }
         private static void Initialize(IServiceProvider service)

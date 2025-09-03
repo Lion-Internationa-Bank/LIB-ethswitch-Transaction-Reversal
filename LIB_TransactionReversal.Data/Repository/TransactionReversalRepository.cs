@@ -377,7 +377,7 @@ namespace LIB_Documentmanagement.Infra.Data.Repository
             //    return checkposibility;
             //}
             //URL = "https://10.1.22.198:4040/createTransferreverse";
-            string URL = _configuration["EndPointUrl:CreateTransfere"] + "/createTransferreverseoutgoing";
+            string URL = _configuration["EndPointUrl:createPrincipalTransferReverse"];
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(URL);
             request.Method = "POST";
             request.ContentType = "application/json";
@@ -496,7 +496,7 @@ namespace LIB_Documentmanagement.Infra.Data.Repository
             //    return checkposibility;
             //}
             //URL = "https://10.1.22.198:4040/createTransferreverse";
-            string URL = _configuration["EndPointUrl:CreateTransfere"] + "/createTransferreverseoutgoing";
+            string URL = _configuration["EndPointUrl:createServiceChargeTransferReverse"];
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(URL);
             request.Method = "POST";
             request.ContentType = "application/json";
@@ -605,7 +605,7 @@ namespace LIB_Documentmanagement.Infra.Data.Repository
             //    return checkposibility;
             //}
             //URL = "https://10.1.22.198:4040/createTransferreverse";
-            string URL = _configuration["EndPointUrl:CreateTransfere"] + "/createTransferreverseoutgoing";
+            string URL = _configuration["EndPointUrl:createVATTransferReverse"];
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(URL);
             request.Method = "POST";
             request.ContentType = "application/json";
@@ -711,7 +711,7 @@ namespace LIB_Documentmanagement.Infra.Data.Repository
                 checkAcc.account = transaction.accountCredited;
                 string checkAccpay = JsonConvert.SerializeObject(checkAcc);
                 //string URL = "http://10.1.10.90:7000/api/lib/v1/checktransactionposibility";
-                string URL = _configuration["EndPointUrl:CheckAccoutUrl"] + "/api/lib/v1/checktransactionposibility";
+                string URL = _configuration["EndPointUrl:checktransactionposibility"];
                 HttpWebRequest request = (HttpWebRequest)WebRequest.Create(URL);
                 request.Method = "POST";
                 request.ContentType = "application/json";

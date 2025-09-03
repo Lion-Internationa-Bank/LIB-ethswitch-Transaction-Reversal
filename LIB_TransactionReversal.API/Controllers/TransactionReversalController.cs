@@ -139,6 +139,10 @@ namespace LIB_Documentmanagement.API.Controllers
             foreach (int id in Ids)
             {
                 result = await _transactionReversalService.CreateTransactionReversal(id);
+                if(result.status == "0")
+                {
+                    return BadRequest(result);
+                }
             }
             return Ok(result);
         }
