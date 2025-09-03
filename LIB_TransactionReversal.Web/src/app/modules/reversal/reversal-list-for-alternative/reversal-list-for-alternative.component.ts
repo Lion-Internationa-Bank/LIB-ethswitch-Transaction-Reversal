@@ -15,7 +15,7 @@ import { SelectionModel } from '@angular/cdk/collections';
   styleUrls: ['./reversal-list-for-alternative.component.css']
 })
 export class ReversalListForAlternativeComponent implements AfterViewInit {
-  displayedColumns: string[] = ['select','accountNumber', 'receiverAccount', 'amount', 'rrn', 'createdAt'];
+  displayedColumns: string[] = ['select','accountNumber', 'receiverAccount', 'amount', 'rrn', 'createdAt','reason'];
   dataSource = new MatTableDataSource([]);
   @ViewChild(MatPaginator) paginator: MatPaginator;
   TransactionSearchForm:FormGroup;

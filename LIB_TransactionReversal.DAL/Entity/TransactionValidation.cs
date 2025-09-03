@@ -10,5 +10,6 @@ namespace LIB_TransactionReversal.DAL.Entity
     {
         string ref_no { get; set; }
         string account_credited { get; set; }
+        string creditor_branch { get; set; }
     }
 }

@@ -209,7 +209,7 @@ export class AuthService {
                   break;
                 case 'DBD3':
                   if (services.includes('EthReconciliation')) {
-                    this.router.navigateByUrl('/reversal/transaction-list')
+                    this.router.navigateByUrl('/reversal/import')
                   }
                   break;
                 case '0078':

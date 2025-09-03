@@ -484,7 +484,7 @@ namespace LIB_TransactionReversal.Infra.Data.Repository
                     int IncommingsucCount = successullList.Count(p => p.TransactionDate.Date == item && p.TransactionType == "1");
                     int IncommingPendingLibCount = PendingOnLiblList.Count(p => p.TransactionDate.Date == item && p.TransactionType == "1");
                     int IncommingPendingEthCount = PendingOnEthSwichlList.Count(p => p.TransactionDate.Date == item && p.TransactionType == "1");
-                    objReconsillationSummaryReport.TransactionDate = item.ToString();
+                    objReconsillationSummaryReport.TransactionDate = item;
                     objReconsillationSummaryReport.TransactionType = "Incomming Transaction";
                     objReconsillationSummaryReport.SuccessfullyReconsiledCount = IncommingsucCount;
                     objReconsillationSummaryReport.PendingOnLIBCount = IncommingPendingLibCount;
@@ -495,7 +495,7 @@ namespace LIB_TransactionReversal.Infra.Data.Repository
                     int OutGoingsucCount = successullList.Count(p => p.TransactionDate.Date == item && p.TransactionType == "0");
                     int OutGoingPendingLibCount = PendingOnLiblList.Count(p => p.TransactionDate.Date == item && p.TransactionType == "0");
                     int OutGoingPendingEthCount = PendingOnEthSwichlList.Count(p => p.TransactionDate.Date == item && p.TransactionType == "0");
-                    objReconsillationSummaryReport.TransactionDate = item.ToString();
+                    objReconsillationSummaryReport.TransactionDate = item;
                     objReconsillationSummaryReport.TransactionType = "Outgoing Transaction";
                     objReconsillationSummaryReport.SuccessfullyReconsiledCount = OutGoingsucCount;
                     objReconsillationSummaryReport.PendingOnLIBCount = OutGoingPendingLibCount;

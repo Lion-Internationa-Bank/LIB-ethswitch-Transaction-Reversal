@@ -8,11 +8,13 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using LIB_TransactionReversal.DAL.DTO;
 using LIB_TransactionReversal.DAL.Entity;
+using Microsoft.AspNetCore.Authorization;
 
 namespace LIB_TransactionReversal.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class TransactionAdjustementController : ControllerBase
     {
         private readonly ITransactionAdjustementService _transactionAdjustementService;

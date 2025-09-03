@@ -11,11 +11,13 @@ using LIB_TransactionReversal.DAL.DTO;
 using System.Linq;
 using LIB_Documentmanagement.API.Controllers;
 using LIB_TransactionReversal.Application.Services;
+using Microsoft.AspNetCore.Authorization;
 
 namespace LIB_TransactionReversal.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class EthswitchTransactionImportController : ControllerBase
     {
         private readonly IEthswitchTransactionImportService _ethswitchTransactionImportService;

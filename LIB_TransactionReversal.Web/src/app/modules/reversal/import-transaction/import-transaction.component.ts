@@ -34,7 +34,7 @@ export class ImportTransactionComponent implements AfterViewInit{
               private apiUrl: ApiUrlService,
               private fb: FormBuilder){
   //  this.getReversalListForAlterative();
-  this.baseUrl = apiUrl.apiReversalTransUrl;
+  //this.baseUrl = apiUrl.apiReversalTransUrl;
  // this.temlateUrl = this.baseUrl + 'ethiSwich%20reconcilation.xlsx'
     this.TransactionImportForm = fb.group({
       TransactionDate:[,Validators.required],
@@ -46,7 +46,7 @@ export class ImportTransactionComponent implements AfterViewInit{
       SearchDate:[,Validators.required],
       TransactionType:[,Validators.required]
       });
-      console.log(this.dataSource)
+      //console.log(this.dataSource)
   }
 
   // getReversalListForAlterative(){
@@ -81,7 +81,7 @@ export class ImportTransactionComponent implements AfterViewInit{
     this.ngxService.start('ImportEthswichTrans')
     this.reversalService.ImportTransaction(transactionList).subscribe(
       res => {
-       console.log(res);
+       //console.log(res);
        
         if(res.length > 0){
           if(res.filter(item => item.isAlreadyExist == true).length >0){

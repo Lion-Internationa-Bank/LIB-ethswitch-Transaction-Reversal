@@ -280,7 +280,7 @@ namespace LIB_TransactionReversal.Infra.Data.Repository
                             else
                             {
                                 res.status = "-1";
-                                res.message = "Transaction is not succed please try";
+                                res.message = "Transaction is not Succeed please try";
                             }
                            // await updateTransactionAdjustementStatus(tras.Id, "UnResponsive", "Payment Process UnResponsive");
                            //return Ok(res);

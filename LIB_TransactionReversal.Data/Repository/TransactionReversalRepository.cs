@@ -40,25 +40,25 @@ namespace LIB_Documentmanagement.Infra.Data.Repository
         {
             try
             {
-                if (transactionReversal.Amount >= 0 && transactionReversal.Amount <= 5000)
-                {
-                    transactionReversal.ServiceFee = Convert.ToDecimal(0.004) * transactionReversal.Amount;
-                    transactionReversal.VAT = Convert.ToDecimal(0.15) * transactionReversal.ServiceFee;
-                    transactionReversal.TotalAmount = transactionReversal.Amount + transactionReversal.ServiceFee + transactionReversal.VAT;
+                //if (transactionReversal.Amount >= 0 && transactionReversal.Amount <= 5000)
+                //{
+                //    transactionReversal.ServiceFee = Convert.ToDecimal(0.004) * transactionReversal.Amount;
+                //    transactionReversal.VAT = Convert.ToDecimal(0.15) * transactionReversal.ServiceFee;
+                //    transactionReversal.TotalAmount = transactionReversal.Amount + transactionReversal.ServiceFee + transactionReversal.VAT;
 
-                }
-                if (transactionReversal.Amount > 5000)
-                {
-                    transactionReversal.ServiceFee = Convert.ToDecimal(0.0024) * transactionReversal.Amount;
-                    transactionReversal.VAT = Convert.ToDecimal(0.15) * transactionReversal.ServiceFee;
-                    transactionReversal.TotalAmount = transactionReversal.Amount + transactionReversal.ServiceFee + transactionReversal.VAT;
-                }
-                transactionReversal.Status = "Approved";
-                transactionReversal.ApprovedBy = _httpContextAccessor.HttpContext.User.Identity.Name;
-                transactionReversal.ApprovedDate = DateTime.Now;
+                //}
+                //if (transactionReversal.Amount > 5000)
+                //{
+                //    transactionReversal.ServiceFee = Convert.ToDecimal(0.0024) * transactionReversal.Amount;
+                //    transactionReversal.VAT = Convert.ToDecimal(0.15) * transactionReversal.ServiceFee;
+                //    transactionReversal.TotalAmount = transactionReversal.Amount + transactionReversal.ServiceFee + transactionReversal.VAT;
+                //}
+                //transactionReversal.Status = "Approved";
+                //transactionReversal.ApprovedBy = _httpContextAccessor.HttpContext.User.Identity.Name;
+                //transactionReversal.ApprovedDate = DateTime.Now;
 
-                _dbContext.TransactionReversal.Add(transactionReversal);
-                await _dbContext.SaveChangesAsync();
+                //_dbContext.TransactionReversal.Add(transactionReversal);
+                //await _dbContext.SaveChangesAsync();
             }
             catch (Exception ex)
             {

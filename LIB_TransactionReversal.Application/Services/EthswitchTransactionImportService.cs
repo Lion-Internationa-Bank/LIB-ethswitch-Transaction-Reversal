@@ -180,6 +180,7 @@ namespace LIB_TransactionReversal.Application.Services
 
                         if (successfulTrans.Count > 0)
                         {
+                            // find list of outgoing transaction that are found in cbs core and not in the ethswich that must be reversed
 
                             var NotFindAtEthSwich = successfulTrans.Where(x => !(transDate.Contains(x.date_1) && referenceNo.Contains(x.ref_no.Trim()))).ToList();
                             if (NotFindAtEthSwich.Count > 0)
@@ -193,6 +194,7 @@ namespace LIB_TransactionReversal.Application.Services
                                     trans.date_1 = Convert.ToDateTime(string.Concat(trans.date_1.ToShortDateString(), " ", trans.time_1));
                                     trans.BankName = libtransforbankname.Where(p => p.Rrn == trans.ref_no).FirstOrDefault()?.BankName;
                                 });
+                                //save to db
                                 await _ethswitchTransactionImportRepository.TransactionNotFoundEthswitch(_mapper.Map<List<TransactionNotFoundAtEthSwitch>>(NotFindAtEthSwich), _context);
                             }
 
@@ -231,9 +233,10 @@ namespace LIB_TransactionReversal.Application.Services
                                 checkedTransactions.Add(transactionReversal);
 
                             });
+                            //save trancsion lists that are for reversal
                             await _transactionReversalRepo.SaveTransactionReversal(checkedTransactions, _context);
 
-
+                            //List of transaction that are in both
                             var FindInBoth = successfulTrans.Where(x => transDate.Contains(x.date_1) && referenceNo.Contains(x.ref_no.Trim())).ToList();
 
                             var FindInBothTransactions = _mapper.Map<List<SuccessfullTransaction>>(FindInBoth);
@@ -244,11 +247,14 @@ namespace LIB_TransactionReversal.Application.Services
                                 tran.EthTransactionDate = ethtrans.Where(p => p.Refnum_F37 == tran.RefNo).FirstOrDefault()?.Transaction_Date;
                                 tran.BankName = ethtrans.Where(p => p.Refnum_F37 == tran.RefNo).FirstOrDefault()?.Acquirer;
                             });
+                            //save to database
                             await _ethswitchTransactionImportRepository.SuccessfullTransaction(FindInBothTransactions, _context);
                         }
 
                         List<DateTime> libdates = libcbstrans.Select(p => p.date_1).ToList();
                         List<string> libReferenceNo = libcbstrans.Select(p => p.ref_no.Trim()).ToList();
+
+                        // list of transaction that are found in Ethswich and not on cbs core db
                         var notFoundLibSide = ethtrans.Where(x => !(libReferenceNo.Contains(x.Refnum_F37) && libdates.Contains(x.Transaction_Date.Date))).ToList();
                         if (notFoundLibSide.Count > 0)
                         {
@@ -262,6 +268,7 @@ namespace LIB_TransactionReversal.Application.Services
                             {
                                 trans.EthTransactionDate = notFoundLibSide.Where(p => p.Refnum_F37 == trans.RefNo).FirstOrDefault().Transaction_Date;
                             });
+                            // save to DB
                             await _ethswitchTransactionImportRepository.TransactionNotFoundLib(TransactionNotFoundLIB, _context);
                         }
                         //}
@@ -379,12 +386,14 @@ namespace LIB_TransactionReversal.Application.Services
 
                         if (successfulTrans.Count > 0)
                         {
-
+                            //get transactionlist find on cbs but not in Ethiswich
                             var NotFindAtEthSwich = successfulTrans.Where(x => !(transDate.Contains(x.date_1) && referenceNo.Contains(x.ref_no.Trim()))).ToList();
                             if (NotFindAtEthSwich.Count > 0)
                             {
                                 searchParams.DateFrom = NotFindAtEthSwich.Min(p => p.date_1).Date;
                                 searchParams.DateTo = NotFindAtEthSwich.Max(p => p.date_1).Date;
+
+                                // check local database to find the bank name that doesnt found in cbs core db
 
                                 List<LibIncommingTransaction> libtransforbankname = await _ethswitchTransactionImportRepository.GetLibIncommingTransactionImports(searchParams);
                                 NotFindAtEthSwich.ForEach(trans =>
@@ -393,12 +402,17 @@ namespace LIB_TransactionReversal.Application.Services
                                     trans.BankName = libtransforbankname.Where(p => p.EthswitchRefNo == trans.ref_no).FirstOrDefault()?.BankName;
                                     trans.TransactionType = "1";
                                 });
+
+                                //save to mysql database
                                 await _ethswitchTransactionImportRepository.TransactionNotFoundEthswitch(_mapper.Map<List<TransactionNotFoundAtEthSwitch>>(NotFindAtEthSwich), _context);
                             }
-                            
+                            //get transactionlist find on both cbs and Ethiswich
+
                             var FindInBoth = successfulTrans.Where(x => transDate.Contains(x.date_1) && referenceNo.Contains(x.ref_no.Trim())).ToList();
 
                             var FindInBothTransactions = _mapper.Map<List<SuccessfullTransaction>>(FindInBoth);
+
+                            //get ethswich transaction date and bank name that doent foun in cbs core
                             FindInBothTransactions.ForEach(tran =>
                             {
                                 tran.LibTransactionDate = Convert.ToDateTime(string.Concat(tran.TransactionDate.ToShortDateString(),
@@ -408,12 +422,17 @@ namespace LIB_TransactionReversal.Application.Services
                                 tran.TransactionType = "1";
 
                             });
+
+                            // save to db
                             await _ethswitchTransactionImportRepository.SuccessfullTransaction(FindInBothTransactions, _context);
                         }
 
 
                         List<DateTime> libdates = libcbstrans.Select(p => p.date_1).ToList();
                         List<string> libReferenceNo = libcbstrans.Select(p => p.ref_no.Trim()).ToList();
+
+                        //get transactionlist find  on Ethswich but not in cbs thous records are for Adjustement 
+
                         var notFoundLibSide = ethtrans.Where(x => !(libReferenceNo.Contains(x.Refnum_F37) && libdates.Contains(x.Transaction_Date.Date))).ToList();
                         if (notFoundLibSide.Count > 0)
                         {
@@ -428,6 +447,8 @@ namespace LIB_TransactionReversal.Application.Services
                             if (libtransnotinEth.Count > 0)
                             {
                                 List<string> accounts = libtransnotinEth.Select(p => p.Account).ToList();
+
+                                // get account branch from core database for each record for adjustement
                                 var accountList = await _ICbsTransactionImportRepo.GetAccountBranch(accounts);
 
                                 TransactionNotFoundLIB = _mapper.Map<List<TransactionNotFoundAtLIB>>(libtransnotinEth);

@@ -5,7 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DefaultModule } from './layouts/default/default.module';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { DeleteconfirmationComponent } from './modules/deleteconfirmation/deleteconfirmation.component';
 import { LoginComponent } from './modules/login/login.component';
 
@@ -14,6 +14,7 @@ import { LoginComponent } from './modules/login/login.component';
 import {  NgxUiLoaderModule, NgxUiLoaderRouterModule, SPINNER} from 'ngx-ui-loader';
 import {ngxUiLoaderConfig} from './shared/NgxUiLoaderConfig'
 import { ConfirmationDialogModule } from './shared/components/confirmation-dialog/confirmation-dialog.module';
+import { AuthInterceptor } from './service/interceptors/auth.interceptor';
 
 
 @NgModule({
@@ -33,7 +34,9 @@ import { ConfirmationDialogModule } from './shared/components/confirmation-dialo
     NgxUiLoaderRouterModule,
     ConfirmationDialogModule
   ],
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {

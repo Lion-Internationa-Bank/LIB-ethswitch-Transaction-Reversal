@@ -11,8 +11,7 @@ export class ApiUrlService {
  //readonly apiUrl = 'http://10.1.22.206:4060/api/';
  //readonly apiUrl = 'https://10.1.10.106:7070/api/';
 
-readonly apiUrlUser = 'http://10.1.10.106:4040/api';
+readonly apiUrlUser = environment.apiUserLogin;
 //readonly apiUrlUser = 'http://10.1.22.25:8080/api';
-readonly apiAwachUrl = environment.awachUrl;
 readonly apiReversalTransUrl = environment.apiReversalTransUrl;
 }

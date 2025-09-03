@@ -109,50 +109,35 @@ export class ReversalService {
               private apiUrl: ApiUrlService,
               private authservice: AuthService) { }
 
-  getListForReversal(): Observable<any>{
-    return this.httpClient.get('http://10.1.10.90:7000/api/lib/v1/checkDailyLimit')
-  }
+  // getListForReversal(): Observable<any>{
+  //   return this.httpClient.get('http://10.1.10.90:7000/api/lib/v1/checkDailyLimit')
+  // }
 
   SaveSelectedForReversal(transactionforReversal): Observable<any>{
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${this.authservice.token}`, 
-    });
-    return this.httpClient.post(`${this.apiUrl.apiReversalTransUrl}${this.SaveSelectedForReversalUrl}`,transactionforReversal,{headers})
+    
+    return this.httpClient.post(`${this.apiUrl.apiReversalTransUrl}${this.SaveSelectedForReversalUrl}`,transactionforReversal)
   }
 
   getSelectedForReversal(params): Observable<any>{
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${this.authservice.token}`, 
-    });
+   
     const param = new HttpParams()
     .append('AccountNo', params.AccountNo != undefined ? params.AccountNo : '')  
     .append('ReferenceNo' , params.ReferenceNo != undefined ? params.ReferenceNo : '')  
     .append('Date', params?.Date)
    // .append('DateTo', params?.DateTo)
     .append('Status', params.Status != undefined ? params.Status : '0')
-    return this.httpClient.get(`${this.apiUrl.apiReversalTransUrl}${this.getSelectedForReversalUrl}`,{params: param, headers})
+    return this.httpClient.get(`${this.apiUrl.apiReversalTransUrl}${this.getSelectedForReversalUrl}`,{params: param})
   }
   createTransaction(id): Observable<any>{
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${this.authservice.token}`, 
-    });
-    return this.httpClient.get(`${this.apiUrl.apiReversalTransUrl}${this.createTransactionUrl}/${id}`,{headers})
+    return this.httpClient.get(`${this.apiUrl.apiReversalTransUrl}${this.createTransactionUrl}/${id}`)
   }
 
   getReversalReport(params): Observable<any>{
-
-      const headers = new HttpHeaders({
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${this.authservice.token}`, 
-      });
     const param = new HttpParams()
     .append('AccountNo', params.AccountNo != undefined ? params.AccountNo : '')   
     .append('DateFrom', params?.DateFrom)
     .append('DateTo', params?.DateTo)
-    return this.httpClient.get(`${this.apiUrl.apiReversalTransUrl}${this.getReversalReportUrl}`,{params: param ,headers})
+    return this.httpClient.get(`${this.apiUrl.apiReversalTransUrl}${this.getReversalReportUrl}`,{params: param})
   }
 
   ImportTransaction(transList): Observable<any>{
@@ -161,175 +146,118 @@ export class ReversalService {
 
   getSuccessfullTransaction(params): Observable<any>{
 
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${this.authservice.token}`, 
-    });
   const param = new HttpParams()
   .append('TransactionType', params.TransactionType)
   .append('AccountNo', params.AccountNo != undefined ? params.AccountNo : '')   
   .append('GlAccountNo', params.GlAccountNo != undefined ? params.GlAccountNo : '')
   .append('Date', params?.Date)
   // .append('DateTo', params?.DateTo)
-  return this.httpClient.get(`${this.apiUrl.apiReversalTransUrl}${this.getSuccessfullTransactionUrl}`,{params: param ,headers})
+  return this.httpClient.get(`${this.apiUrl.apiReversalTransUrl}${this.getSuccessfullTransactionUrl}`,{params: param})
  }
 
  getTransactionNotFoundLib(params): Observable<any>{
 
-  const headers = new HttpHeaders({
-    'Content-Type': 'application/json',
-    Authorization: `Bearer ${this.authservice.token}`, 
-  });
 const param = new HttpParams()
 .append('TransactionType', params.TransactionType)
 .append('AccountNo', params.AccountNo != undefined ? params.AccountNo : '')   
 .append('GlAccountNo', params.GlAccountNo != undefined ? params.GlAccountNo : '')
 .append('Date', params?.Date)
 // .append('DateTo', params?.DateTo)
- return this.httpClient.get(`${this.apiUrl.apiReversalTransUrl}${this.getTransactionNotFoundLibUrl}`,{params: param ,headers})
+ return this.httpClient.get(`${this.apiUrl.apiReversalTransUrl}${this.getTransactionNotFoundLibUrl}`,{params: param })
  }
 
  getTransactionNotFoundEthswitch(params): Observable<any>{
 
-  const headers = new HttpHeaders({
-    'Content-Type': 'application/json',
-    Authorization: `Bearer ${this.authservice.token}`, 
-  });
 const param = new HttpParams()
 .append('TransactionType', params.TransactionType)
 .append('AccountNo', params.AccountNo != undefined ? params.AccountNo : '')   
 .append('Date', params?.Date)
 .append('GlAccountNo', params.GlAccountNo != undefined ? params.GlAccountNo : '')
 // .append('DateTo', params?.DateTo)
- return this.httpClient.get(`${this.apiUrl.apiReversalTransUrl}${this.getTransactionNotFoundEthswitchUrl}`,{params: param ,headers})
+ return this.httpClient.get(`${this.apiUrl.apiReversalTransUrl}${this.getTransactionNotFoundEthswitchUrl}`,{params: param })
  }
 
  ReconsilePendingTransaction(params): Observable<any>{
-  const headers = new HttpHeaders({
-    'Content-Type': 'application/json',
-    Authorization: `Bearer ${this.authservice.token}`, 
-  });
   const param = new HttpParams()
     .append('Date', params?.Date)
     //.append('DateTo', params?.DateTo)
-   return this.httpClient.get(`${this.apiUrl.apiReversalTransUrl}${this.ReconsilePendingTransactionUrl}`,{params: param, headers})
+   return this.httpClient.get(`${this.apiUrl.apiReversalTransUrl}${this.ReconsilePendingTransactionUrl}`,{params: param})
  }
 
  CheckedPendingTransactionForReversal(ids): Observable<any>{
-  const headers = new HttpHeaders({
-    'Content-Type': 'application/json',
-    Authorization: `Bearer ${this.authservice.token}`, 
-  });
- return this.httpClient.post(`${this.apiUrl.apiReversalTransUrl}${this.CheckedPendingTransactionForReversalUrl}`,ids,{headers})
+ 
+ return this.httpClient.post(`${this.apiUrl.apiReversalTransUrl}${this.CheckedPendingTransactionForReversalUrl}`,ids)
  }
 
  GetImportedTransaction(params): Observable<any>{
-  const headers = new HttpHeaders({
-    'Content-Type': 'application/json',
-    Authorization: `Bearer ${this.authservice.token}`, 
-  });
+  
   const param = new HttpParams()
     .append('Date', params?.Date)
     //.append('DateTo', params?.DateTo)
     .append('TransactionType', params.TransactionType)
-   return this.httpClient.get(`${this.apiUrl.apiReversalTransUrl}${this.GetImportedTransactionUrl}`,{params: param, headers})
+   return this.httpClient.get(`${this.apiUrl.apiReversalTransUrl}${this.GetImportedTransactionUrl}`,{params: param})
  }
 
  createBatchTransaction(ids): Observable<any>{
-  const headers = new HttpHeaders({
-    'Content-Type': 'application/json',
-    Authorization: `Bearer ${this.authservice.token}`, 
-  });
- return this.httpClient.post(`${this.apiUrl.apiReversalTransUrl}${this.createTransactionUrl}`,ids,{headers})
+  
+ return this.httpClient.post(`${this.apiUrl.apiReversalTransUrl}${this.createTransactionUrl}`,ids)
  }
 
  getSelectedForAdjustement(params): Observable<any>{
-  const headers = new HttpHeaders({
-    'Content-Type': 'application/json',
-    Authorization: `Bearer ${this.authservice.token}`, 
-  });
+  
   const param = new HttpParams()
   .append('AccountNo', params.AccountNo != undefined ? params.AccountNo : '')  
   .append('ReferenceNo' , params.ReferenceNo != undefined ? params.ReferenceNo : '')  
   .append('Date', params?.Date)
   // .append('DateTo', params?.DateTo)
   .append('Status', params.Status != undefined ? params.Status : '0')
-  return this.httpClient.get(`${this.apiUrl.apiReversalTransUrl}${this.getSelectedForAdjustementUrl}`,{params: param, headers})
+  return this.httpClient.get(`${this.apiUrl.apiReversalTransUrl}${this.getSelectedForAdjustementUrl}`,{params: param})
 }
 
 createAdjustmentTransaction(id): Observable<any>{
-  const headers = new HttpHeaders({
-    'Content-Type': 'application/json',
-    Authorization: `Bearer ${this.authservice.token}`, 
-  });
-  return this.httpClient.get(`${this.apiUrl.apiReversalTransUrl}${this.createAdustmentTransactionUrl}/${id}`,{headers})
+  
+  return this.httpClient.get(`${this.apiUrl.apiReversalTransUrl}${this.createAdustmentTransactionUrl}/${id}`)
 }
 
 createBatchAdjustmentTransaction(ids): Observable<any>{
-  const headers = new HttpHeaders({
-    'Content-Type': 'application/json',
-    Authorization: `Bearer ${this.authservice.token}`, 
-  });
-  return this.httpClient.post(`${this.apiUrl.apiReversalTransUrl}${this.createAdustmentTransactionUrl}`,ids,{headers})
+  
+  return this.httpClient.post(`${this.apiUrl.apiReversalTransUrl}${this.createAdustmentTransactionUrl}`,ids)
 }
 
 CheckedPendingTransactionForAdjustment(ids): Observable<any>{
-  const headers = new HttpHeaders({
-    'Content-Type': 'application/json',
-    Authorization: `Bearer ${this.authservice.token}`, 
-  });
- return this.httpClient.post(`${this.apiUrl.apiReversalTransUrl}${this.CheckedPendingTransactionForAdjustementUrl}`,ids,{headers})
+ return this.httpClient.post(`${this.apiUrl.apiReversalTransUrl}${this.CheckedPendingTransactionForAdjustementUrl}`,ids)
  }
 
   updateTransactionAccount(transaction): Observable<any>{
-  const headers = new HttpHeaders({
-    'Content-Type': 'application/json',
-    Authorization: `Bearer ${this.authservice.token}`, 
-  });
- return this.httpClient.post(`${this.apiUrl.apiReversalTransUrl}${this.UpdateTransactionAccontUrl}`,transaction,{headers})
+  
+ return this.httpClient.post(`${this.apiUrl.apiReversalTransUrl}${this.UpdateTransactionAccontUrl}`,transaction)
  }
 
    ReconsilationSummary(params): Observable<any>{
-      const headers = new HttpHeaders({
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${this.authservice.token}`, 
-      });
     const param = new HttpParams()
     .append('DateFrom', params?.DateFrom)
     .append('DateTo', params?.DateTo)
-    return this.httpClient.get(`${this.apiUrl.apiReversalTransUrl}${this.ReconsilationSummaryUrl}`,{params: param ,headers})
+    return this.httpClient.get(`${this.apiUrl.apiReversalTransUrl}${this.ReconsilationSummaryUrl}`,{params: param })
   }
 
-    InvalidEthiswichDateTransaction(params): Observable<any>{
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${this.authservice.token}`, 
-    });
+  InvalidEthiswichDateTransaction(params): Observable<any>{
   const param = new HttpParams()
   .append('Date', params?.Date)
   // .append('DateTo', params?.DateTo)
-  return this.httpClient.get(`${this.apiUrl.apiReversalTransUrl}${this.InvalidEthiswichDateTransactionUrl}`,{params: param ,headers})
+  return this.httpClient.get(`${this.apiUrl.apiReversalTransUrl}${this.InvalidEthiswichDateTransactionUrl}`,{params: param})
  }
 
    getAdjustementReport(params): Observable<any>{
-      const headers = new HttpHeaders({
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${this.authservice.token}`, 
-      });
+      
     const param = new HttpParams()
     .append('AccountNo', params.AccountNo != undefined ? params.AccountNo : '')   
     .append('DateFrom', params?.DateFrom)
     .append('DateTo', params?.DateTo)
-    return this.httpClient.get(`${this.apiUrl.apiReversalTransUrl}${this.getAdjustementReportUrl}`,{params: param ,headers})
+    return this.httpClient.get(`${this.apiUrl.apiReversalTransUrl}${this.getAdjustementReportUrl}`,{params: param })
   }
 
   getAccountHolderName(account): Observable<any>{
-      const headers = new HttpHeaders({
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${this.authservice.token}`, 
-      });
-   
-    return this.httpClient.get(`${this.apiUrl.apiReversalTransUrl}${this.getAccountHolderNameUrl}/${account}`,{headers})
+    return this.httpClient.get(`${this.apiUrl.apiReversalTransUrl}${this.getAccountHolderNameUrl}/${account}`)
   }
 
 }
